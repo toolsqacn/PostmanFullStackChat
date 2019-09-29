@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "2c347cc1-cece-4024-b199-5031cddb2c2b",
+		"name": "epmployee",
+		"description": "员工信息管理",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3ee0e16a-a9e3-4f1d-b399-9b8e1cf8ec83",
+						"exec": [
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"验证员工姓名\", function () {",
+							"    pm.expect(jsonData.employee_name).to.eql(data.employee_name);",
+							"});",
+							"",
+							"pm.test(\"验证员工薪资\", function () {",
+							"    pm.expect(jsonData.employee_salary).to.eql(data.employee_salary);",
+							"});",
+							"",
+							"",
+							"pm.environment.set(\"variable_key\", \"variable_value\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{id}}\",\n    \"employee_name\": \"{{employee_name}}\",\n    \"employee_salary\": \"{{employee_salary}}\",\n    \"employee_age\": \"{{employee_age}}\",\n    \"profile_image\": \"{{profile_image}}\"\n  }"
+				},
+				"url": {
+					"raw": "http://{{host}}/api/v1/create",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"create"
+					]
+				},
+				"description": "新增员工"
+			},
+			"response": []
+		},
+		{
+			"name": "employee_details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a9290965-ac39-4efb-b04b-af3a122faff0",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"验证员工姓名\", function () {",
+							"    pm.expect(jsonData.employee_name).to.eql(data.employee_name);",
+							"});",
+							"",
+							"pm.test(\"验证员工薪资\", function () {",
+							"    pm.expect(jsonData.employee_salary).to.eql(data.employee_salary);",
+							"});",
+							"",
+							"pm.environment.set(\"id\", jsonData.id);",
+							"pm.environment.set(\"employee_name\", jsonData.employee_name);",
+							"",
+							"var updated_salary = jsonData.employee_salary + 10000;",
+							"pm.environment.set(\"employee_salary\", updated_salary);",
+							"pm.environment.set(\"employee_age\", jsonData.employee_age);",
+							"pm.environment.set(\"profile_image\", jsonData.profile_image);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hosts}}/employee/{{id}}",
+					"protocol": "http",
+					"host": [
+						"{{hosts}}"
+					],
+					"path": [
+						"employee",
+						"{{id}}"
+					]
+				},
+				"description": "获取员工信息明细"
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "54d4babc-25b4-4b64-abc3-caa5fb4480f1",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"验证员工姓名\", function () {",
+							"    pm.expect(jsonData.employee_name).to.eql(data.employee_name);",
+							"});",
+							"",
+							"pm.test(\"验证员工薪资\", function () {",
+							"    pm.expect(jsonData.employee_salary).to.eql(data.updated_employee_salary);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\n    \n    \"employee_salary\": \"{{employee_salary}}\"\n\n  }"
+				},
+				"url": {
+					"raw": "http://{{hosts}}/update/{{id}}",
+					"protocol": "http",
+					"host": [
+						"{{hosts}}"
+					],
+					"path": [
+						"update",
+						"{{id}}"
+					]
+				},
+				"description": "更新员工薪资"
+			},
+			"response": []
+		}
+	]
+}
